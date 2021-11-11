@@ -41,6 +41,8 @@ def url(pQuery):
 def list_items(selGroup, nbrLines):
     xbmcplugin.setContent(addon_handle, "files")
     if xbmcvfs.exists(txtfile):
+
+        dateFormat = "%Y-w%W-d%d-m%m (%B)-y%Y %A"
         f = xbmcvfs.File(txtfile)
         nbr=0 # nbr of line on screen (selected)
         idx=0 # idx of line on the json file
@@ -53,7 +55,7 @@ def list_items(selGroup, nbrLines):
             if len(line)>3 and (group==selGroup or selGroup=='*'):
                 nbr=nbr+1
                 desc=''
-                if show_date == "true": desc = desc + line["date"].strip() + ' '
+                if show_date == "true": desc = desc + line["date"].strip().strftime(dateFormat) + ' '
                 if show_time == "true": desc = desc + line["time"].strip() + ' '
                 show = ''
                 if 'show' in line: show=line["show"] + " "
