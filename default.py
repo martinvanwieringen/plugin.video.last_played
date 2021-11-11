@@ -231,12 +231,13 @@ def videoEnd():
         f.close()
     else: lines = []
 
+    dateFormat = "%Y-w%W-d%d-m%m (%B)-y%Y %A"
     replay = "N"
     for line in lines:
         if xfile!="" and xfile==line["file"]: replay = "S"
         if replay == "S":
             lines.remove(line)
-            line.update({"date": time.strftime("%Y-%m-%d")})
+            line.update({"date": time.strftime(dateFormat)})
             line.update({"time": time.strftime("%H:%M:%S")})
             lines.insert(0, line)
             replay = "S"
@@ -245,7 +246,7 @@ def videoEnd():
             break
 
     if replay=="N":
-        newline = {"source":xsource, "title":xtitle, "year":xyear, "artist":xartist, "file":xfile, "video":xvideo, "id":xid, "type":xtype,"thumbnail":xthumb, "fanart":xfanart, "show":xshow, "season":xseason, "episode":xepisode, "date":time.strftime("%Y-%m-%d"), "time":time.strftime("%H:%M:%S") }
+        newline = {"source":xsource, "title":xtitle, "year":xyear, "artist":xartist, "file":xfile, "video":xvideo, "id":xid, "type":xtype,"thumbnail":xthumb, "fanart":xfanart, "show":xshow, "season":xseason, "episode":xepisode, "date":time.strftime(dateFormat), "time":time.strftime("%H:%M:%S") }
         lines.insert(0, newline)
         if enable_debug	== "true": xbmc.log("<<<plugin.video.last_played (end final play) "+str(newline), 3)
         if starmovies	== "true": send2starmovies(newline)
